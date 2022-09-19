@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class App {
 
     public static Scanner sc = new Scanner(System.in);
-    public static Register loggedUser = null;
+    public static User loggedUser = null;
 
     public static void main(String[] args) {
 
-        ArrayList<Register> list = new ArrayList();
+        ArrayList<User> list = new ArrayList();
 
         boolean controller = true;
         // MENU USER //
@@ -27,12 +27,12 @@ public class App {
                 // SIGN UP //
                 case "1": {
                     System.out.println("========== SIGN UP ==========");//29
-                    System.out.println("type ur email:");
+                    System.out.print("type ur email:");
                     String email = sc.nextLine();
                     System.out.print("now a password:");
                     String psw = sc.nextLine();
 
-                    Register user = new Register();
+                    User user = new User();
                     user.setEmail(email);
                     user.setPsw(psw);
                     list.add(user);
@@ -44,14 +44,14 @@ public class App {
                 }
                 case "2": {
                     System.out.println("============ LOGIN ===========");
-                    System.out.println("ur email:");
+                    System.out.print("ur email:");
                     String email = sc.nextLine();
                     System.out.print("ur password:");
                     String psw = sc.nextLine();
 
                     // EMAIL VERIFICATION  //
                     boolean truLogin = false;
-                    for (Register user : list) {
+                    for (User user : list) {
 
                         String uEmail = user.getEmail();
                         String uPsw = user.getPsw();
@@ -110,10 +110,12 @@ public class App {
                 case "4":
                     break;
                 case "5":
+                    System.out.println("-------- ALL EVENTS ---------");
                     break;
                 case "0":
-                    controller = false;
                     System.out.println("Right,see U!");
+                    controller = false;
+                     loggedUser = null;                   
                     break;
                 default: {
                     System.out.println("You need to enter a valid number!");

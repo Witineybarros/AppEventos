@@ -1,8 +1,11 @@
 
 package app;
 
-public class Register {
- String email,psw;   
+import java.util.ArrayList;
+
+public class User {
+ private String email,psw;   
+ public static ArrayList<Task> tasks;
 
     public String getEmail() {
         return email;
@@ -19,4 +22,5 @@ public class Register {
     public void setPsw(String psw) {
         this.psw = psw;
     }
+    
 }
