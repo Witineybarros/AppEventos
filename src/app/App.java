@@ -111,6 +111,12 @@ public class App {
                     break;
                 case "5":
                     System.out.println("-------- ALL EVENTS ---------");
+                    ArrayList<Event> list_2 = loggedUser.getTasks();
+                    
+                    for(int i = 0;i < list_2.size();i++){
+                        Event t = list_2.get(i);
+                        System.out.println("Event - "+ i);
+                    }
                     break;
                 case "0":
                     System.out.println("Right,see U!");

@@ -1,7 +1,7 @@
 
 package app;
 
-public class Task {
+public class Event {
     private String title;
     private boolean finished;
 

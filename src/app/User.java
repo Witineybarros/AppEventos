@@ -1,11 +1,11 @@
-
 package app;
 
 import java.util.ArrayList;
 
 public class User {
- private String email,psw;   
- public static ArrayList<Task> tasks;
+
+    private String email, psw;
+    private ArrayList<Event> tasks;
 
     public String getEmail() {
         return email;
@@ -22,5 +22,14 @@ public class User {
     public void setPsw(String psw) {
         this.psw = psw;
     }
+
+    public ArrayList<Event> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Event> tasks) {
+        this.tasks = tasks;
+    }
+
     
 }
