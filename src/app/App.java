@@ -26,21 +26,28 @@ public class App {
             switch (opn) {
                 // SIGN UP //
                 case "1": {
+                    
                     System.out.println("========== SIGN UP ==========");//29
                     System.out.print("type ur email:");
                     String email = sc.nextLine();
-                    System.out.print("now a password:");
+                    System.out.print("now password:");
                     String psw = sc.nextLine();
 
                     User user = new User();
                     user.setEmail(email);
                     user.setPsw(psw);
+                    
+                    ArrayList<Event> event = new ArrayList();
+                     user.setEvents(event);
+                   
                     list.add(user);
-
+                    
+                    
                     System.out.println("-> registered successfully <-");//28
                     System.out.println("==============================");//29 
-                    homePage();
+                    //homePage();
                     break;
+                    
                 }
                 case "2": {
                     System.out.println("============ LOGIN ===========");
@@ -106,16 +113,49 @@ public class App {
                 case "2":
                     break;
                 case "3":
+                    System.out.println("----- Confirmed Events ------");
+                    ArrayList<Event> list3 = loggedUser.getEvents();
+                    ArrayList<Event> finished = new ArrayList();
+                    
+                    for(Event ev:list3){
+                        if(ev.isFinished()){
+                            finished.add(ev);     
+                        }
+                    }
+                    if(finished.isEmpty()){
+                        System.out.println("U dont have confirmed Events!!!");
+                    }
+                    for(int i = 0; i<finished.size();i++){
+                        Event ev = finished.get(i);
+                        
+                        System.out.println("Name:"+ ev.getName());
+                        System.out.println("Adress:"+ ev.getNumb()+","+ev.getSt_ave() +"," + ev.getNumbHome()+","+ev.getCity()+","+ev.getState()+","+ev.getZip_code());
+                        System.out.println("Category:"+ev.getCategory());
+                        System.out.println("Description:"+ev.getDescription());
+                        System.out.println("Status:"+ev.isFinished());
+                        System.out.println("------------------------------");
+                        
+                    }
                     break;
                 case "4":
                     break;
                 case "5":
                     System.out.println("-------- ALL EVENTS ---------");
-                    ArrayList<Event> list_2 = loggedUser.getTasks();
+                    ArrayList<Event> list_2 = loggedUser.getEvents();
+                    
+                    if(list_2.isEmpty()){
+                        System.out.println("U don't have Events!!!");
+                    }
                     
                     for(int i = 0;i < list_2.size();i++){
-                        Event t = list_2.get(i);
-                        System.out.println("Event - "+ i);
+                        Event ev = list_2.get(i);
+                        
+                        System.out.println("========= Event - "+ i+" =========");
+                        System.out.println("Name:"+ ev.getName());
+                        System.out.println("Adress:"+ ev.getNumb()+","+ev.getSt_ave() +"," + ev.getNumbHome()+","+ev.getCity()+","+ev.getState()+","+ev.getZip_code());
+                        System.out.println("Category:"+ev.getCategory());
+                        System.out.println("Description:"+ev.getDescription());
+                        System.out.println("Status:"+ev.isFinished());
                     }
                     break;
                 case "0":

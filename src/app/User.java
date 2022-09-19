@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class User {
 
     private String email, psw;
-    private ArrayList<Event> tasks;
+    private ArrayList<Event> events;
 
     public String getEmail() {
         return email;
@@ -23,13 +23,16 @@ public class User {
         this.psw = psw;
     }
 
-    public ArrayList<Event> getTasks() {
-        return tasks;
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 
-    public void setTasks(ArrayList<Event> tasks) {
-        this.tasks = tasks;
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
     }
+
+  
+    
 
     
 }
