@@ -2,7 +2,15 @@
 package app;
 
 public class Event {
-    private String name,numb,st_ave,city,state,country,zip_code,category,description,numbHome;
+    private String name,numb,st_ave,city,state,country,zip_code,category,description,numbHome,yn,status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
@@ -58,14 +66,15 @@ public class Event {
 
     public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
+    }   
+
+    public String getYn() {
+        return yn;
     }
 
-    
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setYn(String yn) {
+        this.yn = yn;
     }
-    private boolean finished;
 
     public String getCategory() {
         return category;
@@ -92,5 +101,13 @@ public class Event {
     }
 public boolean isFinished() {
         return finished;
+    }
+ public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+    private boolean finished;
+
+    void isFinished(boolean onOff) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     }

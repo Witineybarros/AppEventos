@@ -7,6 +7,8 @@ public class App {
 
     public static Scanner sc = new Scanner(System.in);
     public static User loggedUser = null;
+    public static boolean onOff;
+    public static String status;
 
     public static void main(String[] args) {
 
@@ -108,13 +110,67 @@ public class App {
 
             switch (opn) {
                 case "1": {
+                    System.out.println("------- ADD NEW EVENT -------");
+                    System.out.print("Name ur event:");
+                    String name = sc.nextLine();
+                    System.out.println("Now the andress:");
+                    System.out.print("Number:");
+                    String numb = sc.nextLine();
+                    System.out.print("Ave or St:");
+                    String st_ave = sc.nextLine();
+                    System.out.print("apartment number:");
+                    String numbHome = sc.nextLine();
+                    System.out.print("city:");
+                    String city = sc.nextLine();
+                    System.out.print("State:");
+                    String state = sc.nextLine();
+                    System.out.print("Zip Code:");
+                    String zipCode = sc.nextLine();
+                    System.out.print("Country:");
+                    String country = sc.nextLine();
+                    System.out.println("-----------------------------");
+                    System.out.println("Category:");
+                    String category = sc.nextLine();
+                    System.out.println("an DESCRIPTION 'BOUT event:");
+                    String description = sc.nextLine();
+                    System.out.println("-----------------------------");
+                    System.out.println("Would u like to confirm ur presence at this EVENT,");
+                    System.out.println("YES OR NO?");
+                    String yn = sc.nextLine();
+                    if (yn.equals("yes")) {
+                        onOff = true;
+                        status = "CONFIRMED";
+                        System.out.println("Status:" + onOff + status);
+
+                    } else {
+                        onOff = false;
+                        status = "UNCONFIRMED";
+                        System.out.println("status:" + onOff + status);
+                    }
+                    Event ev = new Event();
+                    ev.setName(name);
+                    ev.setNumb(numb);
+                    ev.setSt_ave(st_ave);
+                    ev.setNumbHome(numbHome);
+                    ev.setCity(city);
+                    ev.setState(state);
+                    ev.setZip_code(zipCode);
+                    ev.setCountry(country);
+                    ev.setCategory(category);
+                    ev.setDescription(description);
+                    ev.setYn(yn);
+                    ev.setFinished(onOff);
+                    ev.setStatus(status);
+
+                    loggedUser.getEvents().add(ev);
+                    System.out.println("EVENT added successfully!");
 
                     break;
                 }
-                case "2":{
+                case "2": {
                     break;
                 }
-                case "3":{
+                case "3": {
                     System.out.println("----- Confirmed Events ------");
                     ArrayList<Event> list3 = loggedUser.getEvents();
                     ArrayList<Event> finished = new ArrayList();
@@ -131,16 +187,16 @@ public class App {
                         Event ev = finished.get(i);
                         System.out.println("--------- Evento" + i + " ------------");
                         System.out.println("Name:" + ev.getName());
-                        System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
+                        System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
                         System.out.println("Category:" + ev.getCategory());
                         System.out.println("Description:" + ev.getDescription());
-                        System.out.println("Status:" + ev.isFinished());
+                        System.out.println("Status:" + ev.getStatus());
                         System.out.println("------------------------------");
 
                     }
                     break;
                 }
-                case "4":{
+                case "4": {
 
                     System.out.println("----- Unconfirmed Events ------");
                     ArrayList<Event> list4 = loggedUser.getEvents();
@@ -161,13 +217,13 @@ public class App {
                         System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
                         System.out.println("Category:" + ev.getCategory());
                         System.out.println("Description:" + ev.getDescription());
-                        System.out.println("Status:" + ev.isFinished());
+                        System.out.println("Status:" + ev.getStatus());
                         System.out.println("------------------------------");
                     }
                     break;
                 }
 
-                case "5":{
+                case "5": {
                     System.out.println("-------- ALL EVENTS ---------");
                     ArrayList<Event> list_2 = loggedUser.getEvents();
 
@@ -183,12 +239,12 @@ public class App {
                         System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
                         System.out.println("Category:" + ev.getCategory());
                         System.out.println("Description:" + ev.getDescription());
-                        System.out.println("Status:" + ev.isFinished());
+                        System.out.println("Status:" + ev.getStatus());
                     }
                     break;
                 }
-                case "0":{
-                    System.out.println("Right,see U!");
+                case "0": {
+
                     controller = false;
                     loggedUser = null;
                     break;
