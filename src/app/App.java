@@ -174,18 +174,18 @@ public class App {
                 case "3": {
                     System.out.println("----- Confirmed Events ------");
                     ArrayList<Event> list3 = loggedUser.getEvents();
-                    ArrayList<Event> finished = new ArrayList();
+                    ArrayList<Event> confirmed = new ArrayList();
 
                     for (Event ev : list3) {
                         if (ev.isFinished()) {
-                            finished.add(ev);
+                            confirmed.add(ev);
                         }
                     }
-                    if (finished.isEmpty()) {
+                    if (confirmed.isEmpty()) {
                         System.out.println("U dont have confirmed Events!!!");
                     }
-                    for (int i = 0; i < finished.size(); i++) {
-                        Event ev = finished.get(i);
+                    for (int i = 0; i < confirmed.size(); i++) {
+                        Event ev = confirmed.get(i);
                         System.out.println("--------- Evento" + i + " ------------");
                         System.out.println("Name:" + ev.getName());
                         System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
@@ -193,7 +193,27 @@ public class App {
                         System.out.println("Description:" + ev.getDescription());
                         System.out.println("Status:" + ev.getStatus());
                         System.out.println("------------------------------");
+// enter new status //
+                        System.out.println("Would u like UNCONFIRMED ur presence at an EVENT,");
+                        System.out.println("YES OR NO?");
+                        String yn = sc.nextLine();
+                        if (yn.equals("yes")) {
+                            for (i = 0; i < confirmed.size(); i++) {
+                                Event even = confirmed.get(i);
+                                System.out.println("[" + i + "] Name:" + even.getName());
+                            }
 
+                            System.out.println("Type ur option:");
+                            int position = sc.nextInt();
+                            sc.nextLine();
+                            Event confir = confirmed.get(position);
+                            confir.setFinished(false);
+                            status = "UNCONFIRMED";
+                            confir.setStatus(status);
+
+                        } else {
+                            System.out.println("u need type YES OR NO");
+                        }
                     }
                     break;
                 }
