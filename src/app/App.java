@@ -7,7 +7,7 @@ public class App {
 
     public static Scanner sc = new Scanner(System.in);
     public static User loggedUser = null;
-    public static boolean onOff;
+    //public static boolean onOff = false;
     public static String status;
 
     public static void main(String[] args) {
@@ -137,17 +137,18 @@ public class App {
                     System.out.println("Would u like to confirm ur presence at this EVENT,");
                     System.out.println("YES OR NO?");
                     String yn = sc.nextLine();
+                    Event ev = new Event();
                     if (yn.equals("yes")) {
-                        onOff = true;
+                        ev.setFinished(true);
                         status = "CONFIRMED";
-                        System.out.println("Status:" + onOff + status);
+                        System.out.println("Status:" + status + ev.isFinished());
 
                     } else {
-                        onOff = false;
+                        ev.setFinished(false);
                         status = "UNCONFIRMED";
-                        System.out.println("status:" + onOff + status);
+                        System.out.println("status:" + status + ev.isFinished());
                     }
-                    Event ev = new Event();
+                    // Event ev = new Event();
                     ev.setName(name);
                     ev.setNumb(numb);
                     ev.setSt_ave(st_ave);
@@ -159,7 +160,7 @@ public class App {
                     ev.setCategory(category);
                     ev.setDescription(description);
                     ev.setYn(yn);
-                    ev.setFinished(onOff);
+
                     ev.setStatus(status);
 
                     loggedUser.getEvents().add(ev);
@@ -219,8 +220,33 @@ public class App {
                         System.out.println("Description:" + ev.getDescription());
                         System.out.println("Status:" + ev.getStatus());
                         System.out.println("------------------------------");
+                        
+                        // enter new status //
+                        System.out.println("Would u like to confirm ur presence at an EVENT,");
+                        System.out.println("YES OR NO?");
+                        String yn = sc.nextLine();
+                        if (yn.equals("yes")) {
+                            for (i = 0; i < unConfirmed.size(); i++) {
+                                Event even = unConfirmed.get(i);
+                                System.out.println("[" + i + "] Name:" + even.getName());
+                            }
+
+                            System.out.println("Type ur option:");
+                            int position = sc.nextInt();
+                            sc.nextLine();
+                            Event confirmed = unConfirmed.get(position);
+                            confirmed.setFinished(true);
+                            status = "CONFIRMED";
+                            confirmed.setStatus(status);
+
+                        } else {
+                            System.out.println("u need type YES OR NO");
+                        }
+
                     }
+
                     break;
+
                 }
 
                 case "5": {
