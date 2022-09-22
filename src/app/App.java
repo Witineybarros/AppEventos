@@ -169,6 +169,23 @@ public class App {
                     break;
                 }
                 case "2": {
+                    System.out.println("------- DELETE AN EVENT -------");
+                    ArrayList<Event> list_5 = loggedUser.getEvents();
+
+                    if (list_5.isEmpty()) {
+                        System.out.println("U don't have Events!!!");
+                    }
+
+                    for (int i = 0; i < list_5.size(); i++) {
+                        Event ev = list_5.get(i);
+                        System.out.println("[" + i + "] Name:" + ev.getName());
+                    }
+                        System.out.println("Type ur option:");
+                        int position = sc.nextInt();
+                        sc.nextLine();
+                        list_5.remove(position);
+                        System.out.println("Event DELETED successfully!");
+                    
                     break;
                 }
                 case "3": {
@@ -204,15 +221,15 @@ public class App {
                                 Event even = confirmed.get(inn);
                                 System.out.println("[" + inn + "] Name:" + even.getName());
                             }
-
+                                
                             System.out.println("Type ur option:");
                             int position = sc.nextInt();
-                            sc.nextLine();
+                            sc.nextLine();                        
                             Event confir = confirmed.get(position);
                             confir.setFinished(false);
                             status = "UNCONFIRMED";
                             confir.setStatus(status);
-                            System.out.println("Event NOT CONFIRMED successfuly");
+                            System.out.println("Event NOT CONFIRMED successfully");
                         } else {
                             System.out.println("u need type YES OR NO");
                         }
@@ -262,7 +279,7 @@ public class App {
                             confirmed.setFinished(true);
                             status = "CONFIRMED";
                             confirmed.setStatus(status);
-                            System.out.println("Event CONFIRMED successfuly");
+                            System.out.println("Event CONFIRMED successfully");
                         } else {
                             System.out.println("u need type YES OR NO");
 
