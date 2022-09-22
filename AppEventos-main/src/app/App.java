@@ -183,19 +183,19 @@ public class App {
                     }
                     if (confirmed.isEmpty()) {
                         System.out.println("U dont have confirmed Events!!!");
-                    }
-                    for (int i = 0; i < confirmed.size(); i++) {
-                        Event ev = confirmed.get(i);
-                        System.out.println("--------- Evento" + i + " ------------");
-                        System.out.println("Name:" + ev.getName());
-                        System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
-                        System.out.println("Category:" + ev.getCategory());
-                        System.out.println("Description:" + ev.getDescription());
-                        System.out.println("Status:" + ev.getStatus());
-                        System.out.println("------------------------------");
+                    } else {
+                        for (int i = 0; i < confirmed.size(); i++) {
+                            Event ev = confirmed.get(i);
+                            System.out.println("--------- Evento" + i + " ------------");
+                            System.out.println("Name:" + ev.getName());
+                            System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
+                            System.out.println("Category:" + ev.getCategory());
+                            System.out.println("Description:" + ev.getDescription());
+                            System.out.println("Status:" + ev.getStatus());
+                            System.out.println("------------------------------");
 
-                    }
-                    // enter new status //
+                        }
+                        // enter new status //
                         System.out.println("Would u like UNCONFIRMED ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
                         String yn = sc.nextLine();
@@ -216,6 +216,7 @@ public class App {
                         } else {
                             System.out.println("u need type YES OR NO");
                         }
+                    }
                     break;
                 }
                 case "4": {
@@ -231,21 +232,20 @@ public class App {
                     }
                     if (unConfirmed.isEmpty()) {
                         System.out.println("U have no unconfimed Events!!!");
-                    }
-                    for (int i = 0; i < unConfirmed.size(); i++) {
-                        Event ev = unConfirmed.get(i);
-                        System.out.println("--------- Evento" + i + " ------------");
-                        System.out.println("Name:" + ev.getName());
-                        System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
-                        System.out.println("Category:" + ev.getCategory());
-                        System.out.println("Description:" + ev.getDescription());
-                        System.out.println("Status:" + ev.getStatus());
-                        System.out.println("------------------------------");
-                        
-                        
+                    } else {
+                        for (int i = 0; i < unConfirmed.size(); i++) {
+                            Event ev = unConfirmed.get(i);
+                            System.out.println("--------- Evento" + i + " ------------");
+                            System.out.println("Name:" + ev.getName());
+                            System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
+                            System.out.println("Category:" + ev.getCategory());
+                            System.out.println("Description:" + ev.getDescription());
+                            System.out.println("Status:" + ev.getStatus());
+                            System.out.println("------------------------------");
 
-                    }
-                    // enter new status //
+                        }
+
+                        // enter new status //
                         System.out.println("Would u like to confirm ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
                         String yn = sc.nextLine();
@@ -262,10 +262,11 @@ public class App {
                             confirmed.setFinished(true);
                             status = "CONFIRMED";
                             confirmed.setStatus(status);
-
                         } else {
                             System.out.println("u need type YES OR NO");
+
                         }
+                    }
 
                     break;
 
