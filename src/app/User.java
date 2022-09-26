@@ -1,11 +1,33 @@
 package app;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class User {
 
-    private String email, psw;
+    private String name, tel, email, psw;
+    long ssn;
     private ArrayList<Event> events;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     public String getEmail() {
         return email;
@@ -31,8 +53,33 @@ public class User {
         this.events = events;
     }
 
-  
-    
+    public long getSsn() {
+        return ssn;
+    }
 
-    
+    public void setSsn(long ssn) {
+        this.ssn = ssn;
+    }
+
+    /*public String saveUser() {
+        try {
+
+            FileWriter fw = new FileWriter(ssn + "user.txt", true);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println("Name:" + this.name);
+            pw.println("SSN:" + this.ssn);
+            pw.println("Email:" + this.email);
+            pw.println("psw:" + this.psw);
+            pw.println("name:" + this.name);                                
+            pw.flush();
+            pw.close();
+            fw.close();
+         
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }*/
+
 }

@@ -1,8 +1,14 @@
-
 package app;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Event {
-    private String name,numb,st_ave,city,state,country,zip_code,category,description,numbHome,yn,status;
+
+    private String name, numb, st_ave, city, state, country, zip_code, category, description, numbHome, yn, status;
 
     public String getStatus() {
         return status;
@@ -66,7 +72,7 @@ public class Event {
 
     public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
-    }   
+    }
 
     public String getYn() {
         return yn;
@@ -99,10 +105,12 @@ public class Event {
     public void setNumbHome(String numbHome) {
         this.numbHome = numbHome;
     }
-public boolean isFinished() {
+
+    public boolean isFinished() {
         return finished;
     }
- public void setFinished(boolean finished) {
+
+    public void setFinished(boolean finished) {
         this.finished = finished;
     }
     private boolean finished;
@@ -110,4 +118,6 @@ public boolean isFinished() {
     void isFinished(boolean onOff) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    }
+
+   
+}
