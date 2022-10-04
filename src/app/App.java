@@ -232,16 +232,23 @@ public class App {
                         System.out.println("U don't have Events!!!");
                     }
 
-                    for (int i = 0; i < list_5.size(); i++) {
-                        Event ev = list_5.get(i);
+                    for (Event ev : list_5) {
+
                         System.out.println("[" + ev.getId() + "] Name:" + ev.getName());
                     }
                     System.out.println("Type ur option:");
-                    int position = sc.nextInt();
+                    int id = sc.nextInt();
                     sc.nextLine();
-                    list_5.remove(position);
-                    System.out.println("Event DELETED successfully!");
+                    Event ev = new Event();
+                    ev.setId(id);
+                    ev.setId_user(loggedUser.getId());
 
+                    boolean delete = EventDAO.deleteEvent(ev);
+                    if (delete) {
+                        System.out.println("Event DELETED successfully!");
+                    } else {
+                        System.out.println("Try again");
+                    }
                     break;
                 }
                 case "3": {
@@ -283,10 +290,10 @@ public class App {
                                 int id = sc.nextInt();
                                 sc.nextLine();
                                 String status = "UNCONFIRMED";
-                                
+
                                 Event ev = new Event();
                                 ev.setStatus(status);
-                                
+
                                 ev.setId(id);
                                 ev.setId_user(loggedUser.getId());
 
@@ -346,17 +353,17 @@ public class App {
                                 int id = sc.nextInt();
                                 sc.nextLine();
                                 String status = "CONFIRMED";
-                                
+
                                 Event ev = new Event();
                                 ev.setStatus(status);
-                                
+
                                 ev.setId(id);
                                 ev.setId_user(loggedUser.getId());
 
                                 boolean finished = Finishi_event.confirmed(ev);
-                                if(finished){
-                                System.out.println("Event CONFIRMED successfully");
-                                }else{
+                                if (finished) {
+                                    System.out.println("Event CONFIRMED successfully");
+                                } else {
                                     System.out.println("Try again...");
                                 }
                                 break;

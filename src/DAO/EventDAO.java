@@ -21,6 +21,7 @@ public class EventDAO {
             + "(name,number,ave_st,ap_numb,city,state,zip_code,country,category,description,"
             + "status,tru_fal,id_user) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_TRUFAL_SQL = "UPDATE list_event.event Set status = ?,tru_fal = ? where id = ? and id_user ?";
+    private static final String DELETE_EVENT_SQL = "DELETE from list_event.event where id = ? and id_user?";
 
     public static ArrayList<Event> search_eventUser(User u) {
 
@@ -109,5 +110,30 @@ public class EventDAO {
         return insert;
     }
 
- 
+    public static boolean deleteEvent(Event ev) {
+
+        boolean delete = false;
+        try {
+
+            Driver driver = new Driver();
+            DriverManager.registerDriver(driver);
+            Connection c = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            PreparedStatement stmt = c.prepareStatement(DELETE_EVENT_SQL);
+            stmt.setInt(1, ev.getId());
+            stmt.setInt(2, ev.getId_user());
+
+            int rowsAffected = stmt.executeUpdate();
+            delete = rowsAffected > 0;
+
+                
+            
+            stmt.close();
+            c.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return delete;
+    }
 }
+
