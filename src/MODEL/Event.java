@@ -1,14 +1,31 @@
-package app;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+package MODEL;
 
 public class Event {
 
-    private String name, numb, st_ave, city, state, country, zip_code, category, description, numbHome, yn, status;
+    private String name, number, ave_st, city, state, country, zip_code, category, description, ap_numb, yn, status;
+    private int id, id_user;
+    private boolean confirmed;
+    
+
+    void confirmed(boolean onOff) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStatus() {
         return status;
@@ -26,20 +43,20 @@ public class Event {
         this.name = name;
     }
 
-    public String getNumb() {
-        return numb;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumb(String numb) {
-        this.numb = numb;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getSt_ave() {
-        return st_ave;
+    public String getAve_st() {
+        return ave_st;
     }
 
-    public void setSt_ave(String st_ave) {
-        this.st_ave = st_ave;
+    public void setAve_st(String ave_st) {
+        this.ave_st = ave_st;
     }
 
     public String getCity() {
@@ -98,26 +115,20 @@ public class Event {
         this.description = description;
     }
 
-    public String getNumbHome() {
-        return numbHome;
+    public String getAp_numb() {
+        return ap_numb;
     }
 
-    public void setNumbHome(String numbHome) {
-        this.numbHome = numbHome;
+    public void setAp_numb(String ap_numb) {
+        this.ap_numb = ap_numb;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isConfirmed() {
+        return confirmed;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-    private boolean finished;
-
-    void isFinished(boolean onOff) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 
-   
 }

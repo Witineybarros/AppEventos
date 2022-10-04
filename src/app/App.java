@@ -1,5 +1,10 @@
 package app;
 
+import DAO.EventDAO;
+import DAO.UserDAO;
+import MODEL.Event;
+import MODEL.User;
+import Services.Finishi_event;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,21 +14,22 @@ public class App {
     public static User loggedUser = null;
 
     //public static boolean onOff = false;
-    public static String status, yn;
+    public static String yn;
 
     public static void main(String[] args) {
 
         ArrayList<User> list_user = new ArrayList();
 
         boolean controller = true;
+
         // MENU USER //
         System.out.println("----- Welcome to Events -----");
         while (controller) {
             System.out.println("============ MENU ============");
             System.out.println(".----------------------------.");
-            System.out.println("|      [1]- NEW USER         |");
-            System.out.println("|      [2]- LOGIN            |");
-            System.out.println("|      [0]- LOGOUT           |");
+            System.out.println("|   {1]- NEW USER            |");
+            System.out.println("|   [2]- LOGIN               |");
+            System.out.println("|   [0]- LOGOUT              |");
             System.out.println("*----------------------------*");
             System.out.print("TYPE AN OPTION:");
             String opn = sc.nextLine();
@@ -41,24 +47,27 @@ public class App {
                     System.out.print("type email:");
                     String email = sc.nextLine();
                     System.out.print("type password:");
-                    String psw = sc.nextLine();
+                    String pswd = sc.nextLine();
 
                     User user = new User();
+
                     user.setName(name);
                     user.setSsn(ssn);
                     user.setEmail(email);
-                    user.setPsw(psw);
+                    user.setPswd(pswd);
 
                     ArrayList<Event> event = new ArrayList();
                     user.setEvents(event);
-                    user.saveUser();
-                    list_user.add(user);
 
-        
-                    System.out.println("==============================");//30 
-                    System.out.println("-> Registered successfully <-");//29
-
-                    //homePage();
+                    boolean newUser = UserDAO.newUser(user);
+                    if (newUser) {
+                        System.out.println("==============================");//30 
+                        System.out.println("-> Registered successfully <-");//29
+                    } else {
+                        System.out.println("==============================");
+                        System.out.println("-> Erro when registering <-,");
+                    }
+                    //homePage();1
                     break;
                 }
 
@@ -68,31 +77,23 @@ public class App {
                     long ssn = sc.nextLong();
                     sc.nextLine();
                     System.out.print("ur password:");
-                    String psw = sc.nextLine();
+                    String pswd = sc.nextLine();
                     System.out.println("==============================");
 
                     // EMAIL and PSWD VERIFICATION  //
+                    User u = UserDAO.searchSSN(ssn);
                     boolean truLogin = false;
-                    for (User user : list_user) {
 
-                        long ussn = user.getSsn();
-                        String uPsw = user.getPsw();
-
-                        boolean truSsn = ssn == ussn;
-                        boolean truPsw = psw.equals(uPsw);
-
-                        if (truSsn && truPsw) {
-                            truLogin = true;
-                            loggedUser = user;
-                            break;
-                        }
+                    if (u != null && u.getPswd().equals(pswd)) {
+                        truLogin = true;
                     }
-                    if (!truLogin) {
-                        System.out.println("SSN and Password dont match!");
-                    } else {
+
+                    if (truLogin) {
                         System.out.println("  -> Successfully loaded <-   ");
-                        System.out.println("");
-                        homePage();
+                        loggedUser = u;
+                        homePageUser();
+                    } else {
+                        System.out.println("SSN and Password dont match!");
                     }
                     break;
                 }
@@ -107,12 +108,12 @@ public class App {
                 }
             }
         }
-        
+
         System.out.println("Finished!!!");
 
     }
 
-    public static void homePage() {
+    public static void homePageUser() {
         boolean controller = true;
         while (controller) {
             System.out.println("======== UR HOMEPAGE =========");
@@ -134,17 +135,17 @@ public class App {
                     String name = sc.nextLine();
                     System.out.println("Now the andress:");
                     System.out.print("Number:");
-                    String numb = sc.nextLine();
+                    String number = sc.nextLine();
                     System.out.print("Ave or St:");
-                    String st_ave = sc.nextLine();
+                    String ave_st = sc.nextLine();
                     System.out.print("apartment number:");
-                    String numbHome = sc.nextLine();
+                    String ap_numb = sc.nextLine();
                     System.out.print("city:");
                     String city = sc.nextLine();
                     System.out.print("State:");
                     String state = sc.nextLine();
                     System.out.print("Zip Code:");
-                    String zipCode = sc.nextLine();
+                    String zip_code = sc.nextLine();
                     System.out.print("Country:");
                     String country = sc.nextLine();
                     System.out.println("Category:");
@@ -166,42 +167,57 @@ public class App {
                     Event ev = new Event();
                     switch (yn) {
                         case "yes":
-                            ev.setFinished(true);
-                            status = "CONFIRMED";
-                            System.out.println("Status:" + status + ev.isFinished());
+                            ev.setConfirmed(true);
+
+                            String status = "CONFIRMED";
+                            System.out.println("Status:" + status + ev.isConfirmed());
+
                             ev.setName(name);
-                            ev.setNumb(numb);
-                            ev.setSt_ave(st_ave);
-                            ev.setNumbHome(numbHome);
+                            ev.setNumber(number);
+                            ev.setAve_st(ave_st);
+                            ev.setAp_numb(ap_numb);
                             ev.setCity(city);
                             ev.setState(state);
-                            ev.setZip_code(zipCode);
+                            ev.setZip_code(zip_code);
                             ev.setCountry(country);
                             ev.setCategory(category);
                             ev.setDescription(description);
                             ev.setStatus(status);
+                            ev.setId_user(loggedUser.getId());
 
-                            loggedUser.getEvents().add(ev);
-                            System.out.println("EVENT added successfully!");
+                            boolean insert = EventDAO.insertEvent(ev);
+                            if (insert) {
+                                System.out.println("EVENT added successfully!");
+                            } else {
+                                System.out.println("Try again...");
+                            }
+
                             break;
                         case "no":
-                            ev.setFinished(false);
+                            ev.setConfirmed(false);
+
                             status = "UNCONFIRMED";
-                            System.out.println("status:" + status + ev.isFinished());
+                            System.out.println("status:" + status + ev.isConfirmed());
+
                             ev.setName(name);
-                            ev.setNumb(numb);
-                            ev.setSt_ave(st_ave);
-                            ev.setNumbHome(numbHome);
+                            ev.setNumber(number);
+                            ev.setAve_st(ave_st);
+                            ev.setAp_numb(ap_numb);
                             ev.setCity(city);
                             ev.setState(state);
-                            ev.setZip_code(zipCode);
+                            ev.setZip_code(zip_code);
                             ev.setCountry(country);
                             ev.setCategory(category);
                             ev.setDescription(description);
                             ev.setStatus(status);
+                            ev.setId_user(loggedUser.getId());
 
-                            loggedUser.getEvents().add(ev);
-                            System.out.println("EVENT added successfully!");
+                            boolean insertt = EventDAO.insertEvent(ev);
+                            if (insertt) {
+                                System.out.println("EVENT added successfully!");
+                            } else {
+                                System.out.println("Try again...");
+                            }
 
                             break;
 
@@ -210,7 +226,7 @@ public class App {
                 }
                 case "2": {
                     System.out.println("------- DELETE AN EVENT -------");
-                    ArrayList<Event> list_5 = loggedUser.getEvents();
+                    ArrayList<Event> list_5 = EventDAO.search_eventUser(loggedUser);
 
                     if (list_5.isEmpty()) {
                         System.out.println("U don't have Events!!!");
@@ -218,7 +234,7 @@ public class App {
 
                     for (int i = 0; i < list_5.size(); i++) {
                         Event ev = list_5.get(i);
-                        System.out.println("[" + i + "] Name:" + ev.getName());
+                        System.out.println("[" + ev.getId() + "] Name:" + ev.getName());
                     }
                     System.out.println("Type ur option:");
                     int position = sc.nextInt();
@@ -230,22 +246,23 @@ public class App {
                 }
                 case "3": {
                     System.out.println("----- Confirmed Events ------");
-                    ArrayList<Event> list3 = loggedUser.getEvents();
+                    ArrayList<Event> list3 = EventDAO.search_eventUser(loggedUser);
                     ArrayList<Event> confirmed = new ArrayList();
 
                     for (Event ev : list3) {
-                        if (ev.isFinished()) {
+                        if (ev.isConfirmed()) {
                             confirmed.add(ev);
                         }
                     }
                     if (confirmed.isEmpty()) {
                         System.out.println("U dont have confirmed Events!!!");
                     } else {
-                        for (int i = 0; i < confirmed.size(); i++) {
-                            Event ev = confirmed.get(i);
-                            System.out.println("--------- Evento " + i + " ------------");
+
+                        for (Event ev : confirmed) {
+
+                            System.out.println("--------- Evento " + ev.getId() + " ------------");
                             System.out.println("Name:" + ev.getName());
-                            System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
+                            System.out.println("Adress:" + ev.getNumber() + "," + ev.getAve_st() + "," + ev.getAp_numb() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code() + "," + ev.getCountry());
                             System.out.println("Category:" + ev.getCategory());
                             System.out.println("Description:" + ev.getDescription());
                             System.out.println("Status:" + ev.getStatus());
@@ -255,21 +272,27 @@ public class App {
                         // enter new status //
                         System.out.println("Would u like UNCONFIRMED ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
-                        String yn = sc.nextLine();
+                        yn = sc.nextLine();
                         switch (yn) {
                             case "yes":
-                                for (int inn = 0; inn < confirmed.size(); inn++) {
-                                    Event even = confirmed.get(inn);
-                                    System.out.println("[" + inn + "] Name:" + even.getName());
+                                for (Event ev : confirmed) {
+
+                                    System.out.println("[" + ev.getId() + "] Name:" + ev.getName());
                                 }
                                 System.out.println("Type ur option:");
-                                int position = sc.nextInt();
+                                int id = sc.nextInt();
                                 sc.nextLine();
-                                Event confir = confirmed.get(position);
-                                confir.setFinished(false);
-                                status = "UNCONFIRMED";
-                                confir.setStatus(status);
-                                System.out.println("Event NOT CONFIRMED successfully");
+                                String status = "UNCONFIRMED";
+                                
+                                Event ev = new Event();
+                                ev.setStatus(status);
+                                
+                                ev.setId(id);
+                                ev.setId_user(loggedUser.getId());
+
+                                Finishi_event.unConfirmed(ev);
+
+                                System.out.println("-> Unconfirmed Event <-");
                                 break;
                             case "no":
                                 System.out.println("all right...");
@@ -284,22 +307,23 @@ public class App {
                 case "4": {
 
                     System.out.println("----- Unconfirmed Events ------");
-                    ArrayList<Event> list4 = loggedUser.getEvents();
+                    ArrayList<Event> list4 = EventDAO.search_eventUser(loggedUser);
                     ArrayList<Event> unConfirmed = new ArrayList();
 
                     for (Event ev : list4) {
-                        if (!ev.isFinished()) {
+                        if (!ev.isConfirmed()) {
                             unConfirmed.add(ev);
                         }
                     }
                     if (unConfirmed.isEmpty()) {
                         System.out.println("U have no unconfimed Events!!!");
                     } else {
-                        for (int i = 0; i < unConfirmed.size(); i++) {
-                            Event ev = unConfirmed.get(i);
-                            System.out.println("--------- Evento " + i + " ------------");
+                        for (Event ev : unConfirmed) {
+
+                            System.out.println("--------- Evento " + ev.getId() + " ------------");
+                            System.out.println("Id:" + ev.getId());
                             System.out.println("Name:" + ev.getName());
-                            System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
+                            System.out.println("Adress:" + ev.getNumber() + "," + ev.getAve_st() + "," + ev.getAp_numb() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
                             System.out.println("Category:" + ev.getCategory());
                             System.out.println("Description:" + ev.getDescription());
                             System.out.println("Status:" + ev.getStatus());
@@ -310,22 +334,33 @@ public class App {
                         // enter new status //
                         System.out.println("Would u like to confirm ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
-                        String yn = sc.nextLine();
+                        yn = sc.nextLine();
                         switch (yn) {
                             case "yes":
-                                for (int in = 0; in < unConfirmed.size(); in++) {
-                                    Event even = unConfirmed.get(in);
-                                    System.out.println("[" + in + "] Name:" + even.getName());
+
+                                for (Event ev : unConfirmed) {
+
+                                    System.out.println("[" + ev.getId() + "] Name:" + ev.getName());
                                 }
                                 System.out.println("Type ur option:");
-                                int position = sc.nextInt();
+                                int id = sc.nextInt();
                                 sc.nextLine();
-                                Event confirmed = unConfirmed.get(position);
-                                confirmed.setFinished(true);
-                                status = "CONFIRMED";
-                                confirmed.setStatus(status);
+                                String status = "CONFIRMED";
+                                
+                                Event ev = new Event();
+                                ev.setStatus(status);
+                                
+                                ev.setId(id);
+                                ev.setId_user(loggedUser.getId());
+
+                                boolean finished = Finishi_event.confirmed(ev);
+                                if(finished){
                                 System.out.println("Event CONFIRMED successfully");
+                                }else{
+                                    System.out.println("Try again...");
+                                }
                                 break;
+
                             case "no":
                                 System.out.println("all right...");
                                 break;
@@ -341,7 +376,7 @@ public class App {
 
                 case "5": {
                     System.out.println("-------- ALL EVENTS ---------");
-                    ArrayList<Event> list_2 = loggedUser.getEvents();
+                    ArrayList<Event> list_2 = EventDAO.search_eventUser(loggedUser);
 
                     if (list_2.isEmpty()) {
                         System.out.println("U don't have Events!!!");
@@ -350,9 +385,9 @@ public class App {
                     for (int i = 0; i < list_2.size(); i++) {
                         Event ev = list_2.get(i);
 
-                        System.out.println("========= Event - " + i + " =========");
+                        System.out.println("========= Event - " + ev.getId() + " =========");
                         System.out.println("Name:" + ev.getName());
-                        System.out.println("Adress:" + ev.getNumb() + "," + ev.getSt_ave() + "," + ev.getNumbHome() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
+                        System.out.println("Adress:" + ev.getNumber() + "," + ev.getAve_st() + "," + ev.getAp_numb() + "," + ev.getCity() + "," + ev.getState() + "," + ev.getZip_code());
                         System.out.println("Category:" + ev.getCategory());
                         System.out.println("Description:" + ev.getDescription());
                         System.out.println("Status:" + ev.getStatus());
@@ -363,8 +398,7 @@ public class App {
 
                     controller = false;
                     loggedUser = null;
-                   
-                   
+
                     break;
                 }
                 default: {
@@ -374,4 +408,5 @@ public class App {
 
         }
     }
+
 }
