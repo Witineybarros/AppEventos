@@ -13,7 +13,7 @@ public class App {
     public static Scanner sc = new Scanner(System.in);
     public static User loggedUser = null;
 
-    //public static boolean onOff = false;
+   
     public static String yn;
 
     public static void main(String[] args) {
@@ -45,9 +45,9 @@ public class App {
                     long ssn = sc.nextLong();
                     sc.nextLine();
                     System.out.print("type email:");
-                    String email = sc.nextLine();
+                    String email = sc.nextLine().toLowerCase().trim();
                     System.out.print("type password:");
-                    String pswd = sc.nextLine();
+                    String pswd = sc.nextLine().trim();
 
                     User user = new User();
 
@@ -77,7 +77,7 @@ public class App {
                     long ssn = sc.nextLong();
                     sc.nextLine();
                     System.out.print("ur password:");
-                    String pswd = sc.nextLine();
+                    String pswd = sc.nextLine().trim();
                     System.out.println("==============================");
 
                     // EMAIL and PSWD VERIFICATION  //
@@ -132,32 +132,34 @@ public class App {
                 case "1": {
                     System.out.println("------- ADD NEW EVENT --------");
                     System.out.print("Name ur event:");
-                    String name = sc.nextLine();
+                    String name = sc.nextLine().trim();
                     System.out.println("Now the andress:");
                     System.out.print("Number:");
-                    String number = sc.nextLine();
+                    String number = sc.nextLine().trim();
                     System.out.print("Ave or St:");
-                    String ave_st = sc.nextLine();
+                    String ave_st = sc.nextLine().trim();
                     System.out.print("apartment number:");
-                    String ap_numb = sc.nextLine();
+                    String ap_numb = sc.nextLine().trim();
                     System.out.print("city:");
-                    String city = sc.nextLine();
+                    String city = sc.nextLine().trim();
                     System.out.print("State:");
-                    String state = sc.nextLine();
+                    String state = sc.nextLine().trim();
                     System.out.print("Zip Code:");
-                    String zip_code = sc.nextLine();
+                    String zip_code = sc.nextLine().trim();
                     System.out.print("Country:");
-                    String country = sc.nextLine();
+                    String country = sc.nextLine().trim();
                     System.out.println("Category:");
-                    String category = sc.nextLine();
+                    String category = sc.nextLine().trim();
                     System.out.println("an DESCRIPTION 'BOUT event:");
-                    String description = sc.nextLine();
+                    String description = sc.nextLine().trim();
                     System.out.println("-------------------------------");
                     do {
                         System.out.println("Would u like to confirm ur "
                                 + "presence at this EVENT,");
                         System.out.println("YES OR NO?");
-                        yn = sc.nextLine();
+                        yn = sc.nextLine().toLowerCase().trim();
+                       
+                        
                         if (!"no".equals(yn) && !"yes".equals(yn)) {
                             System.out.println("U NEED TYPE YES OR NO");
                             System.out.println("");
@@ -279,7 +281,8 @@ public class App {
                         // enter new status //
                         System.out.println("Would u like UNCONFIRMED ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
-                        yn = sc.nextLine();
+                        yn = sc.nextLine().toLowerCase().trim();
+                      
                         switch (yn) {
                             case "yes":
                                 for (Event ev : confirmed) {
@@ -341,7 +344,8 @@ public class App {
                         // enter new status //
                         System.out.println("Would u like to confirm ur presence at an EVENT,");
                         System.out.println("YES OR NO?");
-                        yn = sc.nextLine();
+                        yn = sc.nextLine().toLowerCase().trim();
+                        
                         switch (yn) {
                             case "yes":
 
